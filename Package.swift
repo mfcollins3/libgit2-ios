@@ -23,7 +23,7 @@ let package = Package(
 			checksum: "3f11e16440aaaf58d6831a716ecd7bf29343344efb01a9bb1d800c2c9ea3d63a"
 		),
 		.binaryTarget(
-			name: "libssl2",
+			name: "libssh2",
 			url: "https://github.com/mfcollins3/libgit2-ios/releases/download/untagged-b58ada0c5342c46795b6/libssh2.zip",
 			checksum: "1d45791a89f8229fe0db56cace11e4bd57a8df5f54a0f88f8f74159a3a3ac5f8"
 		),
