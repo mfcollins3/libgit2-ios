@@ -6,7 +6,7 @@
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is 
+# copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 #
 # The above copyright notice and this permission notice shall be included in
@@ -32,11 +32,11 @@ pushd $SCRIPT_DIR/.. > /dev/null
 ROOT_PATH=$PWD
 popd > /dev/null
 
-CONFIGURATIONS="ios ios64 iossimulator catalyst"
+CONFIGURATIONS="ios ios64 iossimulator catalyst catalyst-arm"
 for CONFIGURATION in $CONFIGURATIONS
 do
     echo "Building OpenSSL for $CONFIGURATION"
-    
+
     rm -rf /tmp/openssl
     cp -r External/openssl /tmp/
 
@@ -83,6 +83,7 @@ xcodebuild -create-xcframework \
     -library $ROOT_PATH/build/openssl/lib/libcrypto.a \
     -library $ROOT_PATH/build/openssl/iossimulator/lib/libcrypto.a \
     -library $ROOT_PATH/build/openssl/catalyst/lib/libcrypto.a \
+    -library $ROOT_PATH/build/openssl/catalyst-arm/lib/libcrypto.a \
     -output $LIBCRYPTO_PATH
 
 xcodebuild -create-xcframework \
@@ -92,6 +93,8 @@ xcodebuild -create-xcframework \
     -headers $ROOT_PATH/build/openssl/iossimulator/include \
     -library $ROOT_PATH/build/openssl/catalyst/lib/libssl.a \
     -headers $ROOT_PATH/build/openssl/catalyst/include \
+    -library $ROOT_PATH/build/openssl/catalyst-arm/lib/libssl.a \
+    -headers $ROOT_PATH/build/openssl/catalyst-arm/include \
     -output $LIBSSL_PATH
 
 pushd $LIB_PATH/libcrypto > /dev/null
