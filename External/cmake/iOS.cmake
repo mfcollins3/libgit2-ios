@@ -85,7 +85,7 @@ if (NOT DEFINED IOS_PLATFORM)
 endif ()
 set (IOS_PLATFORM ${IOS_PLATFORM} CACHE STRING "Type of iOS Platform")
 
-# Hidden visibilty is required for cxx on iOS 
+# Hidden visibilty is required for cxx on iOS
 if (${IOS_PLATFORM} STREQUAL "CATALYST")
 	set (CMAKE_C_FLAGS_INIT "-target x86_64-apple-ios-macabi")
 	set (CMAKE_CXX_FLAGS_INIT "-fvisibility=hidden -fvisibility-inlines-hidden -target x86_64-apple-ios-macabi")
@@ -153,7 +153,7 @@ set (CMAKE_IOS_DEVELOPER_ROOT ${CMAKE_IOS_DEVELOPER_ROOT} CACHE PATH "Location o
 # Find and use the most recent iOS sdk unless specified manually with CMAKE_IOS_SDK_ROOT
 if (NOT DEFINED CMAKE_IOS_SDK_ROOT)
 	file (GLOB _CMAKE_IOS_SDKS "${CMAKE_IOS_DEVELOPER_ROOT}/SDKs/*")
-	if (_CMAKE_IOS_SDKS) 
+	if (_CMAKE_IOS_SDKS)
 		list (SORT _CMAKE_IOS_SDKS)
 		list (REVERSE _CMAKE_IOS_SDKS)
 		list (GET _CMAKE_IOS_SDKS 0 CMAKE_IOS_SDK_ROOT)
@@ -167,11 +167,11 @@ set (CMAKE_IOS_SDK_ROOT ${CMAKE_IOS_SDK_ROOT} CACHE PATH "Location of the select
 # Set the sysroot default to the most recent SDK
 set (CMAKE_OSX_SYSROOT ${CMAKE_IOS_SDK_ROOT} CACHE PATH "Sysroot used for iOS support")
 
-# set the architecture for iOS 
+# set the architecture for iOS
 if (${IOS_PLATFORM} STREQUAL "OS")
     set (IOS_ARCH armv7;arm64)
 elseif (${IOS_PLATFORM} STREQUAL "SIMULATOR" OR ${IOS_PLATFORM} STREQUAL "CATALYST")
-    set (IOS_ARCH x86_64)
+    set (IOS_ARCH x86_64;arm64)
 endif ()
 
 set (CMAKE_OSX_ARCHITECTURES ${IOS_ARCH} CACHE STRING  "Build architecture for iOS")
