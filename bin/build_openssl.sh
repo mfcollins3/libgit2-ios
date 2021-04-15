@@ -32,7 +32,7 @@ pushd $SCRIPT_DIR/.. > /dev/null
 ROOT_PATH=$PWD
 popd > /dev/null
 
-CONFIGURATIONS="ios ios64 iossimulator catalyst catalyst-arm"
+CONFIGURATIONS="ios ios64 iossimulator iossimulator-arm catalyst catalyst-arm"
 for CONFIGURATION in $CONFIGURATIONS
 do
     echo "Building OpenSSL for $CONFIGURATION"
@@ -58,7 +58,7 @@ done
 
 echo "Creating the universal library for iOS"
 
-OUTPUT_PATH=$ROOT_PATH/build/openssl/lib
+OUTPUT_PATH=$ROOT_PATH/build/openssl/lib-ios
 rm -rf $OUTPUT_PATH
 mkdir -p $OUTPUT_PATH
 lipo -create \
@@ -68,6 +68,34 @@ lipo -create \
 lipo -create \
     $ROOT_PATH/build/openssl/ios/lib/libssl.a \
     $ROOT_PATH/build/openssl/ios64/lib/libssl.a \
+    -output $OUTPUT_PATH/libssl.a
+
+echo "Creating the universal library for iOS Simulator"
+
+OUTPUT_PATH=$ROOT_PATH/build/openssl/lib-iossimulator
+rm -rf $OUTPUT_PATH
+mkdir -p $OUTPUT_PATH
+lipo -create \
+    $ROOT_PATH/build/openssl/iossimulator/lib/libcrypto.a \
+    $ROOT_PATH/build/openssl/iossimulator-arm/lib/libcrypto.a \
+    -output $OUTPUT_PATH/libcrypto.a
+lipo -create \
+    $ROOT_PATH/build/openssl/iossimulator/lib/libssl.a \
+    $ROOT_PATH/build/openssl/iossimulator-arm/lib/libssl.a \
+    -output $OUTPUT_PATH/libssl.a
+
+echo "Creating the universal library for Catalyst"
+
+OUTPUT_PATH=$ROOT_PATH/build/openssl/lib-catalyst
+rm -rf $OUTPUT_PATH
+mkdir -p $OUTPUT_PATH
+lipo -create \
+    $ROOT_PATH/build/openssl/catalyst/lib/libcrypto.a \
+    $ROOT_PATH/build/openssl/catalyst-arm/lib/libcrypto.a \
+    -output $OUTPUT_PATH/libcrypto.a
+lipo -create \
+    $ROOT_PATH/build/openssl/catalyst/lib/libssl.a \
+    $ROOT_PATH/build/openssl/catalyst-arm/lib/libssl.a \
     -output $OUTPUT_PATH/libssl.a
 
 echo "Creating the OpenSSL XCFrameworks"
@@ -80,21 +108,18 @@ rm -rf $LIBSSL_PATH
 mkdir -p $LIB_PATH
 
 xcodebuild -create-xcframework \
-    -library $ROOT_PATH/build/openssl/lib/libcrypto.a \
-    -library $ROOT_PATH/build/openssl/iossimulator/lib/libcrypto.a \
-    -library $ROOT_PATH/build/openssl/catalyst/lib/libcrypto.a \
-    -library $ROOT_PATH/build/openssl/catalyst-arm/lib/libcrypto.a \
+    -library $ROOT_PATH/build/openssl/lib-ios/libcrypto.a \
+    -library $ROOT_PATH/build/openssl/lib-iossimulator/libcrypto.a \
+    -library $ROOT_PATH/build/openssl/lib-catalyst/libcrypto.a \
     -output $LIBCRYPTO_PATH
 
 xcodebuild -create-xcframework \
-    -library $ROOT_PATH/build/openssl/lib/libssl.a \
-    -headers $ROOT_PATH/build/openssl/ios/include \
-    -library $ROOT_PATH/build/openssl/iossimulator/lib/libssl.a \
+    -library $ROOT_PATH/build/openssl/lib-ios/libssl.a \
+    -headers $ROOT_PATH/build/openssl/ios64/include \
+    -library $ROOT_PATH/build/openssl/lib-iossimulator/libssl.a \
     -headers $ROOT_PATH/build/openssl/iossimulator/include \
-    -library $ROOT_PATH/build/openssl/catalyst/lib/libssl.a \
+    -library $ROOT_PATH/build/openssl/lib-catalyst/libssl.a \
     -headers $ROOT_PATH/build/openssl/catalyst/include \
-    -library $ROOT_PATH/build/openssl/catalyst-arm/lib/libssl.a \
-    -headers $ROOT_PATH/build/openssl/catalyst-arm/include \
     -output $LIBSSL_PATH
 
 pushd $LIB_PATH/libcrypto > /dev/null
