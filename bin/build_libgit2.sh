@@ -6,7 +6,7 @@
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is 
+# copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 #
 # The above copyright notice and this permission notice shall be included in
@@ -52,17 +52,17 @@ do
     case $PLATFORM in
         "OS" )
             OPENSSL_ROOT_DIR=$ROOT_PATH/build/openssl/ios
-            OPENSSL_LIBRARIES_DIR=$ROOT_PATH/build/openssl/lib
+            OPENSSL_LIBRARIES_DIR=$ROOT_PATH/build/openssl/lib-ios
             ;;
 
         "SIMULATOR" )
             OPENSSL_ROOT_DIR=$ROOT_PATH/build/openssl/iossimulator
-            OPENSSL_LIBRARIES_DIR=$OPENSSL_ROOL_DIR/lib
+            OPENSSL_LIBRARIES_DIR=$ROOT_PATH/build/openssl/lib-iossimulator
             ;;
 
         "CATALYST" )
             OPENSSL_ROOT_DIR=$ROOT_PATH/build/openssl/catalyst
-            OPENSSL_LIBRARIES_DIR=$OPENSSL_ROOT_DIR/lib
+            OPENSSL_LIBRARIES_DIR=$ROOT_PATH/build/openssl/lib-catalyst
             ;;
     esac
 
