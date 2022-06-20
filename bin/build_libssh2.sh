@@ -51,20 +51,20 @@ do
     case $PLATFORM in
         "OS" )
             OPENSSL_ROOT_DIR=$ROOT_PATH/build/openssl/ios
-            OPENSSL_CRYPTO_LIBRARY=$ROOT_PATH/build/openssl/lib/libcrypto.a
-            OPENSSL_SSL_LIBRARY=$ROOT_PATH/build/openssl/lib/libssl.a
+            OPENSSL_CRYPTO_LIBRARY=$ROOT_PATH/build/openssl/lib-ios/libcrypto.a
+            OPENSSL_SSL_LIBRARY=$ROOT_PATH/build/openssl/lib-ios/libssl.a
             ;;
 
         "SIMULATOR" )
             OPENSSL_ROOT_DIR=$ROOT_PATH/build/openssl/iossimulator
-            OPENSSL_CRYPTO_LIBRARY=$OPENSSL_ROOT_DIR/lib/libcrypto.a
-            OPENSSL_SSL_LIBRARY=$OPENSSL_ROOT_DIR/lib/libssl.a
+            OPENSSL_CRYPTO_LIBRARY=$ROOT_PATH/build/openssl/lib-iossimulator/libcrypto.a
+            OPENSSL_SSL_LIBRARY=$ROOT_PATH/build/openssl/lib-iossimulator/libssl.a
             ;;
 
         "CATALYST" )
             OPENSSL_ROOT_DIR=$ROOT_PATH/build/openssl/catalyst
-            OPENSSL_CRYPTO_LIBRARY=$OPENSSL_ROOT_DIR/lib/libcrypto.a
-            OPENSSL_SSL_LIBRARY=$OPENSSL_ROOT_DIR/lib/libssl.a
+            OPENSSL_CRYPTO_LIBRARY=$ROOT_PATH/build/openssl/lib-catalyst/libcrypto.a
+            OPENSSL_SSL_LIBRARY=$ROOT_PATH/build/openssl/lib-catalyst/libssl.a
             ;;
     esac
 
